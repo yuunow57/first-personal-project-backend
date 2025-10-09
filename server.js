@@ -3,7 +3,6 @@ import sequelize from "./config/database.js";
 import User from "./models/User.js";
 import Trade from "./models/Trade.js";
 
-const PORT = 3000;
 const app = express();
 app.use(express.json());
 
@@ -27,5 +26,5 @@ app.get("/", (req, res) => {
 });
 
 // 서버 실행
-
+const PORT = 3000;
 app.listen(PORT, () => console.log(`✅ 서버가 ${PORT}번 포트에서 실행 중`));
