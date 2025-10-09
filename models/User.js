@@ -27,4 +27,9 @@ const User = sequelize.define("User", {
     },
 });
 
+import Trade from "./Trade.js";
+
+User.hasMany(Trade, { foreignKey: "userId", onDelete: "CASCADE" });
+Trade.belongsTo(User, { foreignKey: "userId" });
+
 export default User;
