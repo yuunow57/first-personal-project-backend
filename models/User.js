@@ -20,7 +20,7 @@ const User = sequelize.define("User", {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
-    balance: {
+    balance: { // 자본금
         type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 1000000.0,
@@ -29,7 +29,7 @@ const User = sequelize.define("User", {
 
 import Trade from "./Trade.js";
 
-User.hasMany(Trade, { foreignKey: "userId", onDelete: "CASCADE" });
-Trade.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Trade, { foreignKey: "userId", onDelete: "CASCADE" }); //User는 여러개의 Trade를 가질 수 있음
+Trade.belongsTo(User, { foreignKey: "userId" }); // Trade는 User에 속함
 
 export default User;

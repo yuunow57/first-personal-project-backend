@@ -13,4 +13,4 @@ const sequelize = new Sequelize(
     }    
 );
 
-export default sequelize;
+export default sequelize; // .env 설정 내보내기
