@@ -1,0 +1,23 @@
+{
+  "name": "first-personal-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuunow57/first-personal-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuunow57/first-personal-project/issues"
+  },
+  "homepage": "https://github.com/yuunow57/first-personal-project#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
