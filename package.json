@@ -1,7 +1,7 @@
 {
   "name": "first-personal-project",
   "version": "1.0.0",
-  "type":"module",
+  "type": "module",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -21,6 +21,7 @@
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
     "mysql2": "^3.15.2",
     "sequelize": "^6.37.7"
   }

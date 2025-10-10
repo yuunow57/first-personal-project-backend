@@ -2,9 +2,11 @@ import express from "express";
 import sequelize from "./config/database.js";
 import User from "./models/User.js";
 import Trade from "./models/Trade.js";
+import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 app.use(express.json());
+app.use("/api", userRoutes);
 
 // DB 연결 테스트
 const connectDB = async() => {
