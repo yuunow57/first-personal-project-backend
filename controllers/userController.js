@@ -34,10 +34,8 @@ export const getUsersById = asyncHandler(async (req, res) => {
 
     const user = await User.findByPk(id);
 
-    if(!user) {
-        res.status(404).json({ message: "❌ 해당 사용자를 찾을 수 없습니다."});
-        return;
-    }
+    if(!user) 
+        return res.status(404).json({ message: "❌ 해당 사용자를 찾을 수 없습니다."});
 
     res.status(200).json({
         message: "✅ 사용자 조회 성공",
@@ -45,21 +43,21 @@ export const getUsersById = asyncHandler(async (req, res) => {
     });
 });
 
-// 회원 업데이트 (Update)
+// ✅ 특정 유저 정보 수정 (Update)
 export const updateUsers = asyncHandler(async (req, res) => {
     const { id } = req.params; // URL 에서 ID 추출
     const { username, email, password } = req.body; // 요청 Body 데이터 추출
 
     const user = await User.findByPk(id); // ID로 수정할 유저 찾기
 
-    if(!user) { // ID에 해당하는 유저가 없을시 에러처리
-        res.status(404).json({ message: "❌ 해당 사용자를 찾을 수 없습니다."});
-        return;
-    }    
+    if(!user)  // ID에 해당하는 유저가 없을시 에러처리
+        return res.status(404).json({ message: "❌ 해당 사용자를 찾을 수 없습니다."});
 
     user.username = username || user.username; // 요청된 항목은 들어온 값으로 수정하고 요청하지 않은 항목은 기존값 유지
     user.email = email || user.email; // email = 클라이언트에서 수정 요청된 값을 가지고 있음, user.email = 기존 user행의 email값을 가지고 있음 
     user.password = password || user.password;
+
+    await user.save(); // 변경사항 DB 반영
 
     res.status(200).json({ // 응답 상태 코드 200 전송
         message: "✅ 사용자 정보 수정 성공",
@@ -74,11 +72,8 @@ export const deleteUser = asyncHandler(async (req, res) => {
     const deleted = await User.destroy({ where: { id } }); // (User).destroy({ where: { id: id} }) = DELETE FROM User WHERE id = id (ex 1) 
                               // destroy는 삭제된 행의 개수를 반환 1 = 정상삭제, 0 = 조건에 맞는 데이터 없음// 위 SQL문과 같은 기능
                             // 객체 축약 원리에 따라 { id : id }를 id로 기입, * [ 객체 축약 원리란 키와 값이 같으면 한쪽 생략 가능 ] *
-    if (deleted === 0) { // 조건에 맞는 데이터가 없어서 deleted에 0이 반환됐으면
-        return res.status(404).json({
-            message: "❌ 해당 사용자를 찾을 수 없습니다.",
-        });
-    }
+    if (deleted === 0) // 조건에 맞는 데이터가 없어서 deleted에 0이 반환됐으면
+        return res.status(404).json({ message: "❌ 해당 사용자를 찾을 수 없습니다." });    
 
     res.status(200).json({ // 응답 상태 코드 200 전송
         message: "✅ 사용자 정보 삭제 성공",
