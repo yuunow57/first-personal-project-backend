@@ -35,32 +35,32 @@ Node.js + Express + Sequelize를 이용해 제작한 가상 코인 투자 웹 �
 | 거래 삭제    | DELETE | `/api/trades/:id` | 거래 삭제       |
 
 🧩 폴더 구조
-📁 first-personal-project
- ┣ 📁 config
- ┃ ┗ database.js
- ┣ 📁 controllers
- ┃ ┣ userController.js
- ┃ ┗ tradeController.js
- ┣ 📁 models
- ┃ ┣ User.js
- ┃ ┗ Trade.js
- ┣ 📁 routes
- ┃ ┣ userRoutes.js
- ┃ ┗ tradeRoutes.js
- ┣ 📄 .env
- ┣ 📄 package.json
- ┗ 📄 server.js
+📁 first-personal-project  
+ ┣ 📁 config  
+ ┃ ┗ database.js  
+ ┣ 📁 controllers  
+ ┃ ┣ userController.js  
+ ┃ ┗ tradeController.js  
+ ┣ 📁 models  
+ ┃ ┣ User.js  
+ ┃ ┗ Trade.js  
+ ┣ 📁 routes  
+ ┃ ┣ userRoutes.js  
+ ┃ ┗ tradeRoutes.js  
+ ┣ 📄 .env  
+ ┣ 📄 package.json  
+ ┗ 📄 server.js  
 
 🚀 실행 방법
 1. 패키지 설치
 npm install express sequelize mysql2 dotenv express-async-handler
 
-2. .env 파일 설정
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=비밀번호
-DB_NAME=first_project
-DB_DIALECT=mysql
+2. .env 파일 설정  
+DB_HOST=localhost  
+DB_USER=root  
+DB_PASSWORD=비밀번호  
+DB_NAME=first_project  
+DB_DIALECT=mysql  
 
 3. 서버 실행
 node server.js
