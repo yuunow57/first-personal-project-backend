@@ -12,7 +12,7 @@ Node.js + Express + Sequelize를 이용해 제작한 가상 코인 투자 웹 �
 | **ORM**      | Sequelize        |
 | **데이터베이스**   | MySQL            |
 | **환경 변수 관리** | dotenv           |
-| **API 테스트**  | Postman          |
+| **API 테스트**  | Thunder Client          |
 
 
 ⚙️ 주요 기능
@@ -53,7 +53,7 @@ Node.js + Express + Sequelize를 이용해 제작한 가상 코인 투자 웹 �
 
 🚀 실행 방법
 1. 패키지 설치
-npm install
+npm install express sequelize mysql2 dotenv express-async-handler
 
 2. .env 파일 설정
 DB_HOST=localhost
@@ -65,7 +65,7 @@ DB_DIALECT=mysql
 3. 서버 실행
 node server.js
 
-4. 테스트 (Postman)
+4. 테스트 (Thunder Client)
 
 - URL: http://localhost:3000/api/users
 - URL: http://localhost:3000/api/trades
