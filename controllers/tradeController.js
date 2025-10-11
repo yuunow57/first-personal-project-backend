@@ -44,7 +44,7 @@ export const createTrade = asyncHandler(async (req, res) => {
         // 거래 금액 한도 검증
         const Max_TRADE_AMOUNT = 1000000000; // 10억
         if (totalAmount > Max_TRADE_AMOUNT)
-            res.status(400).json({ message: "❌ 거래 금액이 한도를 초과했습니다. "});
+            return res.status(400).json({ message: "❌ 거래 금액이 한도를 초과했습니다. "});
 
         // 잔액 증감 처리 부분
         if (type === "buy") {
