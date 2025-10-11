@@ -6,11 +6,33 @@ import User from "../models/User.js"; // 거래의 주인을 확인하기 위함
 export const createTrade = asyncHandler(async (req, res) => {
     const { userId, type, coinName, quantity, price, } = req.body;
     
-    const user = await User.findByPk(userId); // userId가 없을시 에러처리
-    if (!userId)
+    const user = await User.findByPk(userId); 
+    if (!user) // userId가 없을시 에러처리
         return res.status(404).json({ message: "❌ 해당 사용자를 찾을 수 없습니다." });
+
+    // 유효성 검사 부분
+    if (!type || !coinName || !quantity || !price) // 필수 입력값 누락 확인
+        return res.status(400).json({ message: "❌ 필수 입력값이 누락되었습니다." });
+
+    if (quantity <= 0 || price <= 0) // 수량과 가격 음수체크
+        return res.status(400).json({ message: "❌ 수량과 가격은 0보다 커야 합니다." });
     
+    if (!["buy", "sell"].includes(type)) // 거래 유형 검사 ( .includes(type) : type이 해당 배열 안에 포함되어 있는지를 true/false로 반환 )
+        return res.status(400).json({ message: "❌ 잘못된 거래 유형입니다." });
+
     const totalAmount = quantity * price;
+
+    // 잔액 증감 처리 부분
+    if (type === "buy") {
+        if (user.balance < totalAmount)
+            return res.status(400).json({ message: "❌ 잔액이 부족합니다." });
+        user.balance = Number(user.balance) - totalAmount;
+    } else if (type === "sell") {
+        user.balance = Number(user.balance) + totalAmount;
+    }
+
+    await user.save(); // 증감 처리 저장
+    
     const newTrade = await Trade.create({
         userId,
         type,

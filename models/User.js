@@ -21,9 +21,9 @@ const User = sequelize.define("User", {
         allowNull: false,
     },
     balance: { // 자본금
-        type: DataTypes.DECIMAL(15, 2),
+        type: DataTypes.DECIMAL(20, 2),
         allowNull: false,
-        defaultValue: 1000000.0,
+        defaultValue: 1000000,
     },
 });
 
