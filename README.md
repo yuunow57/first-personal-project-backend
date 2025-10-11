@@ -8,11 +8,13 @@ Node.js + Express + Sequelize를 이용해 제작한 가상 코인 투자 웹 �
 🧱 기술 스택
 | 구분           | 기술               |
 | ------------ | ---------------- |
-| **백엔드**      | Node.js, Express |
+| **Language**      | JavaScript (ES6) |
+| **Runtime**      | Node.js |
+| **Framework**      | Express |
 | **ORM**      | Sequelize        |
-| **데이터베이스**   | MySQL            |
+| **Database**   | MySQL            |
 | **환경 변수 관리** | dotenv           |
-| **API 테스트**  | Thunder Client          |
+| **API 테스트 도구**  | Thunder Client          |
 
 
 ⚙️ 주요 기능
@@ -77,3 +79,4 @@ node server.js
 | **Day1.1** | User / Trade 테이블 모델링            |
 | **Day2.0** | User CRUD API 구현 완료             |
 | **Day2.1** | Trade CRUD API 구현 완료            |
+| **Day3.0** | 거래 로직 및 유효성 검사 추가         |
