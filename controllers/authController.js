@@ -6,6 +6,10 @@ import User from "../models/User.js";
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
+    // 비밀번호 유효성 검사
+    if (!password || password.length < 4)
+        return res.status(400).json({ message: "❌ 비밀번호는 4자 이상이어야 합니다. "});
+    
     // 중복 이메일 검사
     const existingUser = await User.findOne({ where : { email } });
     if (existingUser)
