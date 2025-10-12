@@ -4,11 +4,13 @@ import User from "./models/User.js";
 import Trade from "./models/Trade.js";
 import userRoutes from "./routes/userRoutes.js";
 import tradeRoutes from "./routes/tradeRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 app.use(express.json());
 app.use("/api", userRoutes); // /api/users 경로
 app.use("/api", tradeRoutes); // /api/trades 경로
+app.use("/api/auth", authRoutes); // /api/auth/ + 경로
 
 // DB 연결 테스트
 const connectDB = async() => {

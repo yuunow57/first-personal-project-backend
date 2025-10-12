@@ -1,15 +1,28 @@
 import asyncHandler from "express-async-handler"; // 비동기 함수의 에러를 자동으로 처리하는 미들웨어
 import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 
 // 회원 등록 (Create)
 export const createUser = asyncHandler(async (req, res) => { // 여러개를 내보내기 함수앞에 export 적용
     const { username, email, password } = req.body; // 클라이언트가 보낸 Json 데이터 받기
 
+    // 비밀번호 유효성 검사
+    if (!password || password.length < 4)
+        return res.status(400).json({ message: "❌ 비밀번호는 4자 이상이어야 합니다. "});
+
+    // 이미 존재하는 이메일 검사
+    const existingUser = await user.findOne({ where: { email } });
+    if (existingUser)
+        return res.status(400).json({ message: "❌ 이미 존재하는 이메일입니다." });
+
+    // 비밀번호 암호화 (10은 saltRounds, saltRounds란 암호화 강도)
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await User.create({ // User.create = Sequelize 함수로 Sql문의 INSERT와 같은 기능
         username,
         email,
-        password,
-        // 위 3줄의 코드도 객체 축약 원리 적용 ex) username(컬럼명) : username(변수)
+        password: hashedPassword,
+        // 위 2줄의 코드도 객체 축약 원리 적용 ex) username(컬럼명) : username(변수)
     });
 
     res.status(201).json({ // 응답 상태 코드 201 전송
