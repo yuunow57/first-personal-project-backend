@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+// jwt토큰 인증
 export const protect = async (req, res, next) => {
     let token;
 
@@ -13,9 +14,9 @@ export const protect = async (req, res, next) => {
             req.user = await User.findByPk(decoded.id);
             next();
         } catch (error) {
-            res.status(401).json({ message: "❌ 인증 실패 (유효하지 않은 토큰)" });
+            return res.status(401).json({ message: "❌ 인증 실패 (유효하지 않은 토큰)" });
         }
     } else {
-        res.status(401).json({ message: "❌ 토큰이 존재하지 않습니다. "});
+        return res.status(401).json({ message: "❌ 토큰이 존재하지 않습니다. "});
     }
 }
