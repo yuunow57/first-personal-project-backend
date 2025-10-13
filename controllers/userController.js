@@ -11,7 +11,7 @@ export const createUser = asyncHandler(async (req, res) => { // 여러개를 내
         return res.status(400).json({ message: "❌ 비밀번호는 4자 이상이어야 합니다. "});
 
     // 이미 존재하는 이메일 검사
-    const existingUser = await user.findOne({ where: { email } });
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser)
         return res.status(400).json({ message: "❌ 이미 존재하는 이메일입니다." });
 

@@ -1,6 +1,9 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+
 dotenv.config();
+/* 해당 함수는 프로세스에서 한 번만 호출하면 .env 값들이 전역 객체인 process.env에 담기기 떄문에 
+다른 파일에서 dotenv를 참조하지않고 곧바로 process.env로 .env에 접근 할 수 있음 */
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
