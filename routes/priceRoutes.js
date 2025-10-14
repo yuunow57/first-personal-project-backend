@@ -15,6 +15,8 @@ router.get("/coins", asyncHandler(async (req, res) => {
     });
 }));
 
+// 특정 코인 시세 조회 API
+// GET /api/price/:market
 router.get("/price/:market", asyncHandler(async (req, res) => {
     const { market } = req.params;
     if (!market)

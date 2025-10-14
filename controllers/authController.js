@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
 
+// 회원 생성
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -30,6 +31,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     });
 });
 
+// 로그인 api
 export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 

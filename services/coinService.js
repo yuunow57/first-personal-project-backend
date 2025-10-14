@@ -9,7 +9,7 @@ export const getCoinList = async() => {
     // KRW마켓의 시세만 가져오는 필터링
     const krwMarkets = response.data.filter((coin) => coin.market.startsWith("KRW-"));
 
-    return krwMarkets
+    return krwMarkets;
 };
 
 // 특정 코인 시세 조회
