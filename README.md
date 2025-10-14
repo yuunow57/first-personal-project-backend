@@ -8,6 +8,8 @@
 실제 거래소 서비스 수준의 데이터 일관성과 보안 로직을 반영했습니다
 
 
+
+
 ⚙️ 기술 스택  
 
 | 구분     | 사용 기술                             |
@@ -20,6 +22,8 @@
 | 환경 변수  | dotenv                            |
 | 외부 API | Upbit Open API                    |
 | 기타     | Express-Async-Handler (에러 비동기 처리) |
+
+
 
 
 📁 폴더 구조
@@ -35,15 +39,19 @@
  ┗ 📜 .env            # 환경 변수 파일  
 
 
+
+
 🔧 환경 변수 (.env)
 
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=mysql123
-DB_NAME=first_project
-DB_DIALECT=mysql
-JWT_SECRET=my_secret_key
-UPBIT_BASE_URL=https://api.upbit.com/v1
+DB_HOST=localhost  
+DB_USER=root  
+DB_PASSWORD=mysql123  
+DB_NAME=first_project  
+DB_DIALECT=mysql  
+JWT_SECRET=my_secret_key  
+UPBIT_BASE_URL=https://api.upbit.com/v1  
+
+
 
 
 🚀 실행 방법
@@ -54,10 +62,12 @@ npm install
 2️⃣ 서버 실행
 node server.js
 
-3️⃣ 실행 로그 예시
-✅ 데이터베이스에 연결 성공
-✅ 모든 모델이 데이터베이스와 동기화 됨
-✅ 서버가 3000번 포트에서 실행 중
+3️⃣ 실행 로그 예시  
+✅ 데이터베이스에 연결 성공  
+✅ 모든 모델이 데이터베이스와 동기화 됨  
+✅ 서버가 3000번 포트에서 실행 중  
+
+
 
 
 🧩 주요 기능 요약
@@ -73,65 +83,69 @@ node server.js
 | 📈 실시간 시세      | Upbit Open API를 통한 코인 시세 실시간 연동 |
 
 
+
+
 📬 주요 API 예시
 
-🔸 회원가입
-POST /api/auth/register
-{
-  "username": "user01",
-  "email": "user01@email.com",
-  "password": "1234"
-}
+🔸 회원가입  
+POST /api/auth/register  
+{  
+  "username": "user01",  
+  "email": "user01@email.com",  
+  "password": "1234"  
+}  
 
-🔸 로그인 (JWT 발급)
-POST /api/auth/login
-{
-  "email": "user01@email.com",
-  "password": "1234"
-}
+🔸 로그인 (JWT 발급)  
+POST /api/auth/login  
+{  
+  "email": "user01@email.com",  
+  "password": "1234"  
+}  
 
-Response
-{
-  "message": "✅로그인 성공",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5..."
-}
+Response  
+{  
+  "message": "✅로그인 성공",  
+  "token": "eyJhbGciOiJIUzI1NiIsInR5..."  
+}  
 
-🔸 거래 생성 (로그인 필요)
-POST /api/trades
-Headers:
-  Authorization: Bearer <JWT 토큰>
-Body:
-{
-  "userId": 1,
-  "type": "buy",
-  "coinName": "BTC",
-  "quantity": 1,
-  "price": 50000000
-}
+🔸 거래 생성 (로그인 필요)  
+POST /api/trades  
+Headers:  
+  Authorization: Bearer <JWT 토큰>  
+Body:  
+{  
+  "userId": 1,  
+  "type": "buy",  
+  "coinName": "BTC",  
+  "quantity": 1,  
+  "price": 50000000  
+}  
 
-🔸 전체 거래 조회 (로그인 필요)
-GET /api/trades
-Headers:
-  Authorization: Bearer <JWT 토큰>
+🔸 전체 거래 조회 (로그인 필요)  
+GET /api/trades  
+Headers:  
+  Authorization: Bearer <JWT 토큰>  
 
-🔸 실시간 코인 목록 조회 (Upbit API)
-GET /api/coins/
+🔸 실시간 코인 목록 조회 (Upbit API)  
+GET /api/coins/  
 
-Response
-[
-  { "market": "KRW-BTC", "korean_name": "비트코인", "english_name": "Bitcoin" },
-  { "market": "KRW-ETH", "korean_name": "이더리움", "english_name": "Ethereum" }
-]
+Response  
+[  
+  { "market": "KRW-BTC", "korean_name": "비트코인", "english_name": "Bitcoin" },  
+  { "market": "KRW-ETH", "korean_name": "이더리움", "english_name": "Ethereum" }  
+]  
 
-🔸 실시간 시세 조회
-GET /api/price/KRW-BTC
+🔸 실시간 시세 조회  
+GET /api/price/KRW-BTC  
 
-Response
-{
-  "market": "KRW-BTC",
-  "price": 169432000,
-  "change": -0.0130941286
-}
+Response  
+{  
+  "market": "KRW-BTC",  
+  "price": 169432000,  
+  "change": -0.0130941286  
+}  
+
+
 
 
 🧠 프로젝트 흐름 요약
@@ -152,6 +166,8 @@ Response
 → Upbit API 호출로 최신 시세 실시간 반영
 
 
+
+
 ✅ 테스트 완료 항목
 
  회원가입
@@ -167,6 +183,8 @@ Response
  업비트 API 연동
 
 
+
+
  📘 향후 계획
 
 관리자용 페이지 추가 (회원/거래 관리)
@@ -176,6 +194,8 @@ Response
 프론트엔드 연동 (React 기반)
 
 코인 자동 갱신 기능 구현
+
+
 
 
 👨‍💻 제작자
