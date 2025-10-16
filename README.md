@@ -202,5 +202,5 @@ Response
 
 장윤호 (Jang Yunho)
 
-Node.js 기반 백엔드 엔지니어링 프로젝트
+Node.js 기반 백엔드 엔지니어링 프로젝트  
 Capstone Design — “가상 코인 투자 시뮬레이터”

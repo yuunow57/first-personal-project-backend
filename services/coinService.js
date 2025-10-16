@@ -20,3 +20,16 @@ export const getCoinPrice = async (market) => {
 
     return response.data[0]; // 배열 형태로 반환되므로 [0] 선택
 };
+
+export const getAllCoinPrices = async () => {
+    const { data } = await axios.get(`${BASE_URL}/ticker/all`); // 전체 시세 한번에
+
+    const map = {};
+    data.forEach((d) => {
+        map[d.market] = {
+            price: d.trade_price,
+            change: d.signed_change_rate,
+        }
+    });
+    return map;
+}
