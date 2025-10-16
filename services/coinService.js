@@ -22,14 +22,23 @@ export const getCoinPrice = async (market) => {
 };
 
 export const getAllCoinPrices = async () => {
-    const { data } = await axios.get(`${BASE_URL}/ticker/all`); // 전체 시세 한번에
+    const response = await axios.get(`${BASE_URL}/market/all?isDetails=false`); // 응답자료의 .data를 markets에 할당한다는 뜻
+
+    const krwMarkets = response.data.filter((coin) => coin.market.startsWith("KRW-"));
+
+    const marketNames = krwMarkets.map((c) => c.market).join(","); //krwMarkets 배열에서 market요소만 뽑아서 ,를 구분으로 하나의 문자열로 반환
+
+    const tickers = await axios.get(`${BASE_URL}/ticker`, {
+        params: { markets: marketNames }, // 모든 시세 불러오기
+    });
 
     const map = {};
-    data.forEach((d) => {
-        map[d.market] = {
+    tickers.data.forEach((d) => {
+        map[d.market] = { // 가져온 데이터를 map이라는 배열에 키:market, 값:price,change를 가진 배열로 할당
             price: d.trade_price,
             change: d.signed_change_rate,
-        }
+        };
     });
+
     return map;
 }

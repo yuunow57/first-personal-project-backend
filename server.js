@@ -22,7 +22,7 @@ const connectDB = async() => {
     try {
         await sequelize.authenticate(); //.env 설정으로 DB 접속 시도
         console.log("✅ 데이터베이스에 연결 성공");
-        await sequelize.sync({ alter: true }); // 정의된 모든 모델로 DB 테이블 생성
+        await sequelize.sync({  }); // 정의된 모든 모델로 DB 테이블 생성
         console.log("✅ 모든 모델이 데이터베이스와 동기화 됨");
     } catch (error) {
         console.error("❌ 데이터베이스 연결 실패", error);
