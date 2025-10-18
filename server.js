@@ -5,17 +5,24 @@ import Trade from "./models/Trade.js";
 import userRoutes from "./routes/userRoutes.js";
 import tradeRoutes from "./routes/tradeRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-import priceRoutes from "./routes/priceRoutes.js";
+import coinRoutes from "./routes/coinRoutes.js";
+import portfolioRoutes from "./routes/portfolioRoutes.js";
 import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",  //프론트 주소 (Vite 기본 포트)
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
-app.use("/api", userRoutes); // /api/users 경로
-app.use("/api", tradeRoutes); // /api/trades 경로
-app.use("/api/auth", authRoutes); // /api/auth/ + 경로
-app.use("/api", priceRoutes) // /api/coins, /api/price 경로
+app.use("/api", userRoutes); //         /api/users 경로
+app.use("/api", tradeRoutes); //        /api/trades 경로
+app.use("/api/auth", authRoutes); //    /api/auth/ + 경로
+app.use("/api", coinRoutes) //          /api/coins, /api/price 경로
+app.use("/api", portfolioRoutes); //    /api/me 경로
 
 // DB 연결 테스트
 const connectDB = async() => {

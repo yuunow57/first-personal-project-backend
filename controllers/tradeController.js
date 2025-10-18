@@ -6,7 +6,9 @@ import { Op } from "sequelize";
 
 // ✅ 거래 생성 (Create)
 export const createTrade = asyncHandler(async (req, res) => {
-    const { userId, type, coinName, quantity, price, } = req.body;
+    const { type, coinName, quantity, price, } = req.body;
+
+    const userId = req.user.id; // protect를 먼저 거치고 진입하기때문에 req로 들어오는 데이터는 무조건 로그인한 사용자
     
     const transaction = await sequelize.transaction(); // 트랜잭션 생성
     try {
@@ -28,10 +30,12 @@ export const createTrade = asyncHandler(async (req, res) => {
         // 거래 단위 유효성 강화
         if (quantity < 0.0001)
             return res.status(400).json({ message: "❌ 최소 거래 수량은 0.0001 이상이어야 합니다." });
-        if (price < 10)
-            return res.status(400).json({ message: "❌ 최소 거래 금액은 10원 이상이어야 합니다." });
 
         const totalAmount = quantity * price;
+        
+        if (totalAmount < 10)
+            return res.status(400).json({ message: "❌ 최소 거래 금액은 10원 이상이어야 합니다." });
+
 
         // 동일 코인 중복 거래 방지 ( 3초 이내 )
         const recentTrade = await Trade.findOne({ // Op.gte = ">=" 연산자와 동일 == createdAt >= (현재시간 - 3초)를 뜻함

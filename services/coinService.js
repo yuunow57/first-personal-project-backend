@@ -21,6 +21,28 @@ export const getCoinPrice = async (market) => {
     return response.data[0]; // 배열 형태로 반환되므로 [0] 선택
 };
 
+// 여러 코인 시세 조회
+export const getCoinsPrice = async (markets = []) => { // 배열 매개변수
+    if (!markets.length) return {}; // 입력받은 매개변수가 비어있으면
+
+    const chunks = [];
+    for (let i = 0; i < markets.length; i += 100)
+        chunks.push(markets.slice(i, i + 100)); // 입력받은 배열을 첫번째부터 100개씩 담음
+
+    const result = {};
+    for (const part of chunks) {
+        const qs = part.join(","); // 입력받은 배열을 ,로 구분하여 qs에 하나로 합침 ( 최대 100개의 market )
+        const { data } = await axios.get(`${BASE_URL}/ticker?markets=${qs}`);
+
+        data.forEach((t) => { result[t.market] = t.trade_price; }); // market: "KRW-BTC", price: 1234 구조를 "KRW-BTC": 1234구조로 변경
+    }
+
+    
+    return result;
+}
+
+
+// 모든 코인 시세 조회
 export const getAllCoinPrices = async () => {
     const response = await axios.get(`${BASE_URL}/market/all?isDetails=false`); // 응답자료의 .data를 markets에 할당한다는 뜻
 
@@ -41,4 +63,16 @@ export const getAllCoinPrices = async () => {
     });
 
     return map;
+}
+
+// 24시간 변동률 정보 가져오기
+export const getCandles = async (market) => {
+    const { data } = await axios.get(`${BASE_URL}/candles/minutes/60?market=${market}&count=24`);
+
+    const changes = data.map(item => ({
+        price: item.trade_price,
+        time: item.timestamp,
+    }));
+
+    return changes;
 }

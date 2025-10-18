@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import { getCoinList, getCoinPrice, getAllCoinPrices } from "../services/coinService.js";
+import { getCoinList, getCoinPrice, getAllCoinPrices, getCandles } from "../services/coinService.js";
 
 const router = express.Router();
 
@@ -32,6 +32,7 @@ router.get("/price/:market", asyncHandler(async (req, res) => {
     });
 }));
 
+
 // 모든 코인 시세 조회 API
 // GET /api/prices
 router.get("/prices", asyncHandler(async (req, res) => {
@@ -42,5 +43,21 @@ router.get("/prices", asyncHandler(async (req, res) => {
         prices,
     });
 }));
+
+
+// 24시간 변동률 조회 API
+// GET /api/candles/:market
+router.get("/candles/:market", asyncHandler(async (req, res) => {
+    const { market } = req.params;
+    if (!market)
+        return res.status(400).json({ message: "❌ 마켓 코드가 필요합니다. (예: KRW-BTC)" });
+    
+    const candles = await getCandles(market);
+    res.status(200).json({
+        message: "✅ 변동률 조회 성공",
+        candles,
+    });
+}));
+
 
 export default router;
