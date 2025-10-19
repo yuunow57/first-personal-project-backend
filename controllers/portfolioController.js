@@ -21,13 +21,13 @@ export const getMyPortfolio = asyncHandler(async (req, res) => {
         const q = Number(t.quantity) || 0;
         
         if (!qtyByMarket[m]) qtyByMarket[m] = 0; // 초기값 0 설정
-        qtyByMarket[m] += (t.type === "buy"? q : -q); // 거래유형이 buy면 갯수만큼 더하기, 아니면 갯수만큼 빼기
+        qtyByMarket[m] += (t.type === "buy" ? q : -q); // 거래유형이 buy면 갯수만큼 더하기, 아니면 갯수만큼 빼기
      }
 
      // 0 이하 종목 제거
      const markets = Object.entries(qtyByMarket) // 객체를 2차원 배열로 변환
      .filter(([, qty]) => qty > 0) // 배열 구조분해로 [market, qty]중 qty만 사용, 그중 0보다 큰것만 필터
-     .map(([m]) => m); // 배열 구조부냏로 첫 번쨰 요소(코인 이름)만 꺼내오기
+     .map(([m]) => m); // 배열 구조분해로 첫 번쨰 요소(코인 이름)만 꺼내오기
 
      let prices = {};
      if (markets.length) {
@@ -36,7 +36,7 @@ export const getMyPortfolio = asyncHandler(async (req, res) => {
 
      // 코인별 평가액 계산
      const coins = markets.map((m) => {
-        const quantity = qtyByMarket[m];
+        const quantity = Number(qtyByMarket[m].toFixed(4));
         const price = Number(prices[m]);
         const value = quantity * price;
         return { market: m, quantity, price, value };
@@ -48,7 +48,7 @@ export const getMyPortfolio = asyncHandler(async (req, res) => {
 
      res.status(200).json({
         message: "✅ 내 자산 조회 성공",
-        balance,
+        balance, 
         totalCoinValue,
         totalAsset,
         coins,

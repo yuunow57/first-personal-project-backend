@@ -6,7 +6,7 @@ import { protect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.post("/trades", protect, createTrade); // 거래 생성
-router.get("/trades", protect, getTrades); // 전체 거래 내역 조회
+router.get("/trades", getTrades); // 전체 거래 내역 조회
 router.get("/trades/:id", protect, getTradeById); // 특정 거래 내역 조회
 router.put("/trades/:id", protect, updateTrade); // 거래 내역 수정
 router.delete("/trades/:id", protect, deleteTrade); // 거래 내역 삭제

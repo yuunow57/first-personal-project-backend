@@ -55,7 +55,24 @@ export const createTrade = asyncHandler(async (req, res) => {
             if (user.balance < totalAmount)
                 return res.status(400).json({ message: "❌ 잔액이 부족합니다." });
             user.balance = Number(user.balance) - totalAmount;
-        } else if (type === "sell") {
+        } else if (type === "sell") { // 매도 시 보유 수량 확인
+            const userTrades = await Trade.findAll({
+                where: { userId, coinName },
+                attributes: ["type", "quantity"],
+                raw: true,
+            });
+
+            let ownedQty = 0;
+            userTrades.forEach((t) => {
+                ownedQty += (t.type === "buy" ? Number(t.quantity) : -Number(t.quantity));
+            });
+            // 부동소수점 오차 방지 소수점 4자리로 고정
+            ownedQty = Number(ownedQty.toFixed(4));
+
+            if (ownedQty < Number(quantity)) {
+                return res.status(400).json({ message: " ❌보유 수량이 부족합니다 "});
+            }
+            
             user.balance = Number(user.balance) + totalAmount; // decimal 타입은 sequelize에서 문자열로 반환되기 때문에 Number로 감싸줘야 함
         }
 
@@ -80,7 +97,8 @@ export const createTrade = asyncHandler(async (req, res) => {
             trade: newTrade,
         });
     } catch (error) {
-        await transaction.rollback(); // 실패 시 되돌림
+        if (transaction.finished !== "commit")
+            await transaction.rollback(); // 실패 시 되돌림
         res.status(500).json({ message: " ❌ 거래 중 오류 발생", error: error.message });
     }
 });

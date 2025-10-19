@@ -51,5 +51,11 @@ export const loginUser = asyncHandler(async (req, res) => {
     res.status(200).json({
         message: "✅로그인 성공",
         token,
+        user: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            balance: user.balance,
+        },
     });
 });
