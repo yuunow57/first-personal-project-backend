@@ -113,16 +113,20 @@ export const getTrades = asyncHandler(async (req, res) => {
     })
 })
 
-// ✅ 특정 거래 조회 (Read One)
+// ✅ 특정 회원 거래 조회 (Read One)
 export const getTradeById = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const trade = await Trade.findByPk(id, { include: User });
+    
+    const trade = await Trade.findAll({
+        where: { userId: id },
+        order: [["createdAt", "DESC"]], // 생성순으로 내림차순으로 정렬
+    });
 
-    if (!trade)
-        return res.status(404).json({ message: " ❌ 해당 거래를 찾을 수 없습니다. "});
+    if (!trade || trade.length === 0)
+        return res.status(404).json({ message: "❌ 해당 회원의 거래 내역이 없습니다." });
 
     res.status(200).json({
-        message: "✅ 거래 조회 성공",
+        message: "✅ 회원 거래 내역 조회 성공",
         trade,
     });
 });

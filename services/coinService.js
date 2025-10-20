@@ -34,10 +34,9 @@ export const getCoinsPrice = async (markets = []) => { // 배열 매개변수
         const qs = part.join(","); // 입력받은 배열을 ,로 구분하여 qs에 하나로 합침 ( 최대 100개의 market )
         const { data } = await axios.get(`${BASE_URL}/ticker?markets=${qs}`);
 
-        data.forEach((t) => { result[t.market] = t.trade_price; }); // market: "KRW-BTC", price: 1234 구조를 "KRW-BTC": 1234구조로 변경
-    }
-
-    
+        data.forEach((t) => { result[t.market] = t.trade_price; }); 
+        // { market: "KRW-BTC", price: 1234 } 구조를 { "KRW-BTC": 1234 }구조로 변경
+    }    
     return result;
 }
 
