@@ -43,5 +43,6 @@ app.get("/", (req, res) => {
     res.send("서버가 정상적으로 실행 중");
 });
 
+const PORT = process.env.PORT;
 // 서버 실행
-app.listen(process.env.PORT, () => console.log(`✅ 서버가 ${PORT}번 포트에서 실행 중`));
+app.listen(PORT, () => console.log(`✅ 서버가 ${PORT}번 포트에서 실행 중`));
