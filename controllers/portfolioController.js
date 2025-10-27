@@ -47,7 +47,7 @@ export const getMyPortfolio = asyncHandler(async (req, res) => {
      const totalAsset = balance + totalCoinValue // 총 자산
 
      res.status(200).json({
-        message: "✅ 내 자산 조회 성공",
+        message: "내 자산 조회 성공",
         balance, 
         totalCoinValue,
         totalAsset,
