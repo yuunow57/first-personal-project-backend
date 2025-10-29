@@ -40,20 +40,6 @@
 
 
 
-
-🔧 환경 변수 (.env)
-
-DB_HOST=localhost  
-DB_USER=root  
-DB_PASSWORD=mysql123  
-DB_NAME=first_project  
-DB_DIALECT=mysql  
-JWT_SECRET=my_secret_key  
-UPBIT_BASE_URL=https://api.upbit.com/v1  
-
-
-
-
 🚀 실행 방법
 
 1️⃣ 의존성 설치
